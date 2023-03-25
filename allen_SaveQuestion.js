@@ -7,13 +7,27 @@ var timerINH = setInterval(() => {
     return;
   }
   //if essay type question
-  if (document.querySelector("[ng-bind-html='essayText']")) {
-    $0.querySelector("[ng-bind-html='questionText']").innerHtml =
-      document.querySelector("[ng-bind-html='essayText']").innerHTML +
-      "<br>" +
-      $0.querySelector("[ng-bind-html='questionText']").innerHtml;
+  if (document.querySelector("[ng-bind-html='essayText']").innerHTML.trim()) {
+    console.log(
+      `<div ng-bind-html='questionText'>${
+        document.querySelector("[ng-bind-html='essayText']").innerHTML
+      }<br><hr>${
+        $0.querySelector("[ng-bind-html='questionText']").innerHTML
+      } <br>
+       </div>
+
+      ${
+        $0.querySelector(".optncntnt")
+          ? `<div class="optncntnt">
+        ${$0.querySelector(".optncntnt").innerHTML}
+      </div>`
+          : ""
+      }
+        `
+    );
+  } else {
+    console.log($0.innerHTML);
   }
-  console.log($0.innerHTML);
 
   inh = $0.innerHTML;
 }, 10); //check every 10ms
