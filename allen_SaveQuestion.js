@@ -52,3 +52,16 @@ function printQuesAns() {
   }
   console.log(obj);
 }
+
+//! ------------------------USE BELOW TO CONCATENATE IN PREVIOUSLY STORED OBJECT------------------
+
+// @ PARAMS: test1 = obj1, test2=obj2
+function concat(test1, test2) {
+  //? WHY AM I NOT USING A SIMPLE ARRAY FOR STORING QUESTIONS?
+  var numQuesTest1 = Object.keys(test1).length;
+  for (var quesNo of Object.keys(test2)) {
+    quesNo = parseInt(quesNo);
+    test1[numQuesTest1 + quesNo] = test2[quesNo];
+  }
+  console.log(test1);
+}
