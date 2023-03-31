@@ -4,6 +4,15 @@ var $0 = document.querySelector(".questioninr");
 var quesNo = document.querySelector("[ng-bind='currentSerailNo']");
 var inh = $0.innerHTML;
 var tmpContainer = document.createElement("div");
+var getOptions = (opts) => {
+  var str = "";
+  for (var opt of opts) {
+    str += `<div class="optncntnt">
+    ${opt.innerHTML}
+  </div>`;
+  }
+  return str;
+};
 var timerINH = setInterval(() => {
   if ($0.innerHTML == inh) {
     return;
@@ -17,9 +26,7 @@ var timerINH = setInterval(() => {
 
     ${
       $0.querySelector(".optncntnt")
-        ? `<div class="optncntnt">
-      ${$0.querySelector(".optncntnt").innerHTML}
-    </div>`
+        ? getOptions($0.querySelectorAll(".optncntnt"))
         : ""
     }
       `;
@@ -31,14 +38,17 @@ var timerINH = setInterval(() => {
 
   inh = $0.innerHTML;
 }, 10); //check every 10ms
-tmpContainer.style.display = "none";
-document.body.appendChild(tmpContainer);
+
 //!
 //Copy below code then call printQuesAns();
-var questions = tmpContainer.querySelectorAll("[ng-bind-html='questionText']");
-var options = tmpContainer.querySelectorAll(".optncntnt");
 
 function printQuesAns() {
+  tmpContainer.style.display = "none";
+  document.body.appendChild(tmpContainer);
+  var questions = tmpContainer.querySelectorAll(
+    "[ng-bind-html='questionText']"
+  );
+  var options = tmpContainer.querySelectorAll(".optncntnt");
   var obj = {};
   for (var i = 0; i < questions.length; i++) {
     obj[i + 1] = {
