@@ -64,7 +64,8 @@ function printQuesAns() {
       };
     } else {
       obj[i + 1] = {
-        q: questions[i].innerHTML,
+        q: questions[i].querySelector("[ng-bind-html='questionText']")
+          .innerHTML,
         o1: "",
         o2: "",
         o3: "",
