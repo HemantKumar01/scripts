@@ -19,7 +19,9 @@ var timerINH = setInterval(() => {
   }
   //if essay type question
   if (document.querySelector("[ng-bind-html='essayText']").innerHTML.trim()) {
-    tmpContainer.innerHTML += `<div ng-bind-html='questionText'>${
+    tmpContainer.innerHTML += `
+    <div class="ques">
+    <div ng-bind-html='questionText'>${
       document.querySelector("[ng-bind-html='essayText']").innerHTML
     }<br><hr>${$0.querySelector("[ng-bind-html='questionText']").innerHTML} <br>
      </div>
@@ -29,10 +31,10 @@ var timerINH = setInterval(() => {
         ? getOptions($0.querySelectorAll(".optncntnt"))
         : ""
     }
-      `;
+     </div> `;
     console.log("saved ques. no", quesNo.innerHTML);
   } else {
-    tmpContainer.innerHTML += $0.innerHTML;
+    tmpContainer.innerHTML += `<div class='ques'>${$0.innerHTML}</div>`;
     console.log("saved ques. no", quesNo.innerHTML);
   }
 
@@ -45,20 +47,31 @@ var timerINH = setInterval(() => {
 function printQuesAns() {
   tmpContainer.style.display = "none";
   document.body.appendChild(tmpContainer);
-  var questions = tmpContainer.querySelectorAll(
-    "[ng-bind-html='questionText']"
-  );
-  var options = tmpContainer.querySelectorAll(".optncntnt");
+  var questions = tmpContainer.querySelectorAll(".ques");
+
   var obj = {};
   for (var i = 0; i < questions.length; i++) {
-    obj[i + 1] = {
-      q: questions[i].innerHTML,
-      o1: options[4 * i]?.innerHTML || "",
-      o2: options[4 * i + 1]?.innerHTML || "",
-      o3: options[4 * i + 2]?.innerHTML || "",
-      o4: options[4 * i + 3]?.innerHTML || "",
-      ans: "",
-    };
+    var options = questions[i].querySelectorAll(".optncntnt");
+    if (options.length > 0) {
+      obj[i + 1] = {
+        q: questions[i].querySelector("[ng-bind-html='questionText']")
+          .innerHTML,
+        o1: options[0]?.innerHTML || "",
+        o2: options[1]?.innerHTML || "",
+        o3: options[2]?.innerHTML || "",
+        o4: options[3]?.innerHTML || "",
+        ans: "",
+      };
+    } else {
+      obj[i + 1] = {
+        q: questions[i].innerHTML,
+        o1: "",
+        o2: "",
+        o3: "",
+        o4: "",
+        ans: "",
+      };
+    }
   }
   console.log(obj);
 }
