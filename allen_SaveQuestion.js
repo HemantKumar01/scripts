@@ -1,42 +1,42 @@
-//!-------------------COPY BELOW TO CONSOLE-------------------
+//!-------------------COPY BELOW TO CONSOLE AND THEN MOVE TO REQUIRED QUESTIONS ONE BY ONE, THEN CALL printQuesAns()-------------------
 //after running this script in console on allen test solution website,click each question, then copy console(or save it) and then remove all "VM..." type extra stuff
 var $0 = document.querySelector(".questioninr");
+var quesNo = document.querySelector("[ng-bind='currentSerailNo']");
 var inh = $0.innerHTML;
+var tmpContainer = document.createElement("div");
 var timerINH = setInterval(() => {
   if ($0.innerHTML == inh) {
     return;
   }
   //if essay type question
   if (document.querySelector("[ng-bind-html='essayText']").innerHTML.trim()) {
-    console.log(
-      `<div ng-bind-html='questionText'>${
-        document.querySelector("[ng-bind-html='essayText']").innerHTML
-      }<br><hr>${
-        $0.querySelector("[ng-bind-html='questionText']").innerHTML
-      } <br>
-       </div>
+    tmpContainer.innerHTML += `<div ng-bind-html='questionText'>${
+      document.querySelector("[ng-bind-html='essayText']").innerHTML
+    }<br><hr>${$0.querySelector("[ng-bind-html='questionText']").innerHTML} <br>
+     </div>
 
-      ${
-        $0.querySelector(".optncntnt")
-          ? `<div class="optncntnt">
-        ${$0.querySelector(".optncntnt").innerHTML}
-      </div>`
-          : ""
-      }
-        `
-    );
+    ${
+      $0.querySelector(".optncntnt")
+        ? `<div class="optncntnt">
+      ${$0.querySelector(".optncntnt").innerHTML}
+    </div>`
+        : ""
+    }
+      `;
+    console.log("saved ques. no", quesNo.innerHTML);
   } else {
-    console.log($0.innerHTML);
+    tmpContainer.innerHTML += $0.innerHTML;
+    console.log("saved ques. no", quesNo.innerHTML);
   }
 
   inh = $0.innerHTML;
 }, 10); //check every 10ms
-
-//! ------------------------BELOW TO BE USED ON HTML SAVED FROM ABOVE------------------
+tmpContainer.style.display = "none";
+document.body.appendChild(tmpContainer);
+//!
 //Copy below code then call printQuesAns();
-
-var questions = document.querySelectorAll("[ng-bind-html='questionText']");
-var options = document.querySelectorAll(".optncntnt");
+var questions = tmpContainer.querySelectorAll("[ng-bind-html='questionText']");
+var options = tmpContainer.querySelectorAll(".optncntnt");
 
 function printQuesAns() {
   var obj = {};
