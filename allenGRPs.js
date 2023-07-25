@@ -13329,14 +13329,32 @@ obj = [
     color_name: "color_name",
   },
 ];
-function countUnique(iterable) {
-  return new Set(iterable).size;
-}
+
+var filteredData = {
+  Mathematics: [],
+  Physics: [],
+  "Physical chemistry": [],
+  "Inorganic chemistry": [],
+  "Organic chemistry": [],
+};
 var tmpList = [];
-for (var i = 0; i < obj.length; i++) {
-  var o = obj[i];
-  if (tmpList.includes(o.url)) {
-    // console.log(i, tmpList.indexOf(o.url));
+for (var elm of obj) {
+  if (!tmpList.includes(elm.url)) {
+    if (elm.c_subject_name) {
+      tmpList.push(elm.url);
+      filteredData[elm.c_subject_name].push({
+        name: elm.c_name,
+        topic: elm.c_topic_name,
+        url: elm.url,
+      });
+    } else {
+      // console.log(elm);
+    }
   }
-  tmpList.push(o.url);
 }
+console.log(tmpList.length);
+
+const fs = require("fs");
+
+fs.writeFileSync("data.json", JSON.stringify(filteredData), "utf-8");
+console.log("Done");
